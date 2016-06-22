@@ -67,7 +67,7 @@ public class Vector2F {
 	
 	public double getDistanceBetweenWorldVectors(Vector2F v){
 		float dx = Math.abs(getWorldLocation().xPos - v.getWorldLocation().xPos);
-		float xy = Math.abs(getWorldLocation().yPos - v.getWorldLocation().yPos);
+		float dy = Math.abs(getWorldLocation().yPos - v.getWorldLocation().yPos);
 		return Math.abs(dx*dx - dy*dy);
 	}
 	
