@@ -5,6 +5,9 @@ import java.awt.Component;
 public class GameLoop extends IDGameLoop {
 
 	GameStateManager gsm;
+	public static Assets assets = new Assets();
+	public static float xOffset;
+	public static float yOffset;
 	
 	
 	
@@ -14,6 +17,8 @@ public class GameLoop extends IDGameLoop {
 	
 	@Override
 	public void init() {
+		assets.init();
+		Vector2F.setWorldVariable(xOffset, yOffset);
 		gsm = new GameStateManager();
 		gsm.init();
 	
@@ -22,6 +27,7 @@ public class GameLoop extends IDGameLoop {
 	
 	@Override
 	public void tick(double deltaTime) {
+		Vector2F.setWorldVariable(xOffset, yOffset);
 		gsm.tick(deltaTime);
 	}
 	
