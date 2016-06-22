@@ -71,7 +71,6 @@ public class Vector2F {
 		return Math.abs(dx*dx - dy*dy);
 	}
 	
-	
 }
 
 

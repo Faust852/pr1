@@ -11,6 +11,7 @@ public abstract class GameState {
 		this.gsm = gsm;
 	}
 	
+	public abstract void init();
 	public abstract void tick(double deltaTime);
 	public abstract void render(Graphics2D g);
 }
