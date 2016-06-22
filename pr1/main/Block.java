@@ -23,6 +23,9 @@ public class Block extends Rectangle{
 		case STONE_1:
 			block = Assets.getStone_1();
 			break;
+		case STONE_2:
+			block = Assets.getStone_2();
+			break;
 
 		}
 	}
@@ -37,7 +40,8 @@ public class Block extends Rectangle{
 	}
 	
 	public enum BlockType{
-		STONE_1
+		STONE_1,
+		STONE_2
 	}
 
 	

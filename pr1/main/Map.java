@@ -18,7 +18,7 @@ public class Map {
 		BufferedImage map = null;
 		
 		try {
-			map = LoadImageFrom.loadImageFrom(Main.class, "map.png");
+			map = LoadImageFrom.loadImageFrom(Main.class, "map.png");  
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -29,6 +29,9 @@ public class Map {
 				switch (color & 0xffffff) {
 				case 0x808080:
 					tiles.blocks.add(new Block(new Vector2F(x*48,y*48), BlockType.STONE_1) );
+					break;
+				case 0x707070:
+					tiles.blocks.add(new Block(new Vector2F(x*48,y*48), BlockType.STONE_2) );
 					break;
 
 				default:
