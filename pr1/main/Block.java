@@ -11,39 +11,65 @@ public class Block extends Rectangle{
 	private BlockType blocktype;
 	private BufferedImage block;
 	
+	private boolean isSolid;
+	
 
-	public Block(Vector2F pos, BlockType blockyype) {
+	public Block(Vector2F pos, BlockType blocktype) {
 		this.pos = pos;
-		this.blocktype = blockyype;
+		this.blocktype = blocktype;
 		init();
 	}
+
 	
 	public void init() {
 		switch (blocktype) {
 		case STONE_1:
 			block = Assets.getStone_1();
 			break;
-		case STONE_2:
-			block = Assets.getStone_2();
+		case WALL_1:
+			block = Assets.getWall_1();
 			break;
 
 		}
 	}
 	
 	public void tick(double deltaTime){
-		
+		setBounds((int)pos.xPos, (int)pos.yPos, blockSize, blockSize);
 	}
 	
 	public void render(Graphics2D g){
-		//g.drawRect((int)pos.getWorldLocation().xPos, (int)pos.getWorldLocation().yPos, blockSize, blockSize);
 		g.drawImage(block, (int)pos.getWorldLocation().xPos, (int)pos.getWorldLocation().yPos, blockSize, blockSize, null);
+		if(isSolid){
+			g.drawRect((int)pos.getWorldLocation().xPos, (int)pos.getWorldLocation().yPos, blockSize, blockSize);
+		}
 	}
 	
 	public enum BlockType{
 		STONE_1,
-		STONE_2
+		WALL_1
 	}
+
+	public Block isSolid(boolean isSolid) {
+		this.isSolid = isSolid;
+		return this;
+	}
+
+
+	public boolean isSolid() {
+		return isSolid;
+	}
+
 
 	
 
 }
+
+
+
+
+
+
+
+
+
+

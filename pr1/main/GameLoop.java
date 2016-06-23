@@ -6,8 +6,7 @@ public class GameLoop extends IDGameLoop {
 
 	GameStateManager gsm;
 	public static Assets assets = new Assets();
-	public static float xOffset;
-	public static float yOffset;
+	public static Vector2F map = new Vector2F();
 	
 	
 	
@@ -18,7 +17,7 @@ public class GameLoop extends IDGameLoop {
 	@Override
 	public void init() {
 		assets.init();
-		Vector2F.setWorldVariable(xOffset, yOffset);
+		Vector2F.setWorldVariable(map.xPos, map.yPos);
 		gsm = new GameStateManager();
 		gsm.init();
 	
@@ -27,7 +26,7 @@ public class GameLoop extends IDGameLoop {
 	
 	@Override
 	public void tick(double deltaTime) {
-		Vector2F.setWorldVariable(xOffset, yOffset);
+		Vector2F.setWorldVariable(map.xPos, map.yPos);
 		gsm.tick(deltaTime);
 	}
 	

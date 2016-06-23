@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class TileManager {
 	
-	public ArrayList<Block> blocks= new ArrayList<>();
+	public static ArrayList<Block> blocks= new ArrayList<>();
 
 	public TileManager() {
 		// TODO Auto-generated constructor stub

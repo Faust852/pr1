@@ -12,8 +12,9 @@ public class Main {
 	static SpriteSheet blocks = new SpriteSheet();
 	
 	public static void main(String[] args) {
-	 GameWindows frame = new GameWindows("pr1", 800, 600);
-	 frame.setFullScreenMode(0);
+	 GameWindows frame = new GameWindows("pr1", width, height);
+	 frame.setFullScreenMode(1);
+	 frame.addKeyListener(new Player());
 	 frame.add(new GameLoop(width,height));
 	 frame.setVisible(true);
 	}

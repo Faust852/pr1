@@ -8,6 +8,8 @@ import pr1.main.Block.BlockType;
 public class Map {
 	
 	TileManager tiles = new TileManager();
+	
+	Player player = new Player();
 
 
 	public Map() {
@@ -15,6 +17,8 @@ public class Map {
 	}
 	
 	public void init(){
+		player.init();
+		
 		BufferedImage map = null;
 		
 		try {
@@ -28,10 +32,10 @@ public class Map {
 				int color = map.getRGB(x, y);
 				switch (color & 0xffffff) {
 				case 0x808080:
-					tiles.blocks.add(new Block(new Vector2F(x*48,y*48), BlockType.STONE_1) );
+					tiles.blocks.add(new Block(new Vector2F(x*48,y*48), BlockType.STONE_1));
 					break;
 				case 0x707070:
-					tiles.blocks.add(new Block(new Vector2F(x*48,y*48), BlockType.STONE_2) );
+					tiles.blocks.add(new Block(new Vector2F(x*48,y*48), BlockType.WALL_1).isSolid(true));
 					break;
 
 				default:
@@ -44,10 +48,12 @@ public class Map {
 	
 	public void tick(double deltaTime){
 		tiles.tick(deltaTime);
+		player.tick(deltaTime);
 	}
 	
 	public void render(Graphics2D g){
 		tiles.render(g);
+		player.render(g);
 	}
 
 }
