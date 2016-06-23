@@ -12,10 +12,12 @@ public class Block extends Rectangle{
 	private BufferedImage block;
 	
 	private boolean isSolid;
+	private boolean isOneScreen;
 	
 
 	public Block(Vector2F pos, BlockType blocktype) {
 		this.pos = pos;
+		setOneScreen(true);
 		this.blocktype = blocktype;
 		init();
 	}
@@ -37,13 +39,17 @@ public class Block extends Rectangle{
 	}
 	
 	public void tick(double deltaTime){
-		setBounds((int)pos.xPos, (int)pos.yPos, blockSize, blockSize);
+		if (isOneScreen()){
+			setBounds((int)pos.xPos, (int)pos.yPos, blockSize, blockSize);
+		}
 	}
 	
 	public void render(Graphics2D g){
-		g.drawImage(block, (int)pos.getWorldLocation().xPos, (int)pos.getWorldLocation().yPos, blockSize, blockSize, null);
-		if(isSolid){
-			//g.drawRect((int)pos.getWorldLocation().xPos, (int)pos.getWorldLocation().yPos, blockSize, blockSize);
+		if(isOneScreen()){
+			g.drawImage(block, (int)pos.getWorldLocation().xPos, (int)pos.getWorldLocation().yPos, blockSize, blockSize, null);
+			if(isSolid){
+				//g.drawRect((int)pos.getWorldLocation().xPos, (int)pos.getWorldLocation().yPos, blockSize, blockSize);
+			}
 		}
 	}
 	
@@ -63,7 +69,14 @@ public class Block extends Rectangle{
 		return isSolid;
 	}
 
+	public boolean isOneScreen() {
+		return isOneScreen;
+	}
 
+
+	public void setOneScreen(boolean isOneScreen) {
+		this.isOneScreen = isOneScreen;
+	}
 	
 
 }

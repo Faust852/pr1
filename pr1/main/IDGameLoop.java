@@ -84,8 +84,8 @@ public class IDGameLoop extends JPanel implements Runnable{
 			}
 			if (System.currentTimeMillis() - lastTime >= 1000) {
 				lastTime += 1000;
-				tps = frames;
-				fps = ticks;
+				fps = frames;
+				tps = ticks;
 				frames = 0;
 				ticks = 0;
 

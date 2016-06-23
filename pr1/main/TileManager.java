@@ -14,6 +14,12 @@ public class TileManager {
 	public void tick(double deltaTime){
 		for(Block block : blocks) {
 			block.tick(deltaTime);
+			
+			if(Player.render.intersects(block)){
+				block.setOneScreen(true);
+			}else {
+				block.setOneScreen(false);
+			}
 
 		}
 	}

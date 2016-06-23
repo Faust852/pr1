@@ -3,6 +3,7 @@ package pr1.main;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
@@ -28,6 +29,17 @@ public class Player implements KeyListener {
 	
 	private float fixedDt = 1f/60F;
 	
+	public int currentFPS = 0;
+    public int FPS = 0;
+    public long startFPS = 0;
+	
+	/*
+	 * Rendering
+	 */
+	private int renderDistanceWidth = 64; 
+	private int renderDistanceHeight = 32; 
+	public static Rectangle render;
+	
 	//TODO
 	private int animationState = 4;
 	
@@ -50,11 +62,22 @@ public class Player implements KeyListener {
 	private ArrayList<BufferedImage> listIdle;
 	Animator ani_idle;
 	
-	public Player() {
+	private HUDManager hudM;
+	private GUIManager guiM;
+	
+	public Player() {		
+		hudM = new HUDManager(this);
+		guiM = new GUIManager();
 		pos = new Vector2F(Main.width / 2 - width / 2, Main.height / 2 - height / 2);
 		}
 	
 	public void init() {
+		
+		render = new Rectangle(	(int)(pos.xPos  - pos.getWorldLocation().xPos + pos.xPos - renderDistanceWidth *32 / 2 + width / 2),
+								(int)(pos.yPos -  pos.getWorldLocation().yPos + pos.yPos - renderDistanceHeight * 32 / 2 + height / 2), 
+								renderDistanceWidth * 32, 
+								renderDistanceHeight * 32);
+		
 		listUp = new ArrayList<BufferedImage>();
 		listDown = new ArrayList<BufferedImage>();
 		listLeft = new ArrayList<BufferedImage>();
@@ -105,6 +128,11 @@ public class Player implements KeyListener {
 
 	public void tick(double deltaTime) {
 		
+		render = new Rectangle(	(int)(pos.xPos  - pos.getWorldLocation().xPos + pos.xPos - renderDistanceWidth *32 / 2 + width / 2),
+								(int)(pos.yPos -  pos.getWorldLocation().yPos + pos.yPos - renderDistanceHeight * 32 / 2 + height / 2), 
+								renderDistanceWidth * 32, 
+								renderDistanceHeight * 32);
+		
 		float moveAmountUp =(float) (speedUp * fixedDt);
 		float moveAmountDown =(float) (speedDown * fixedDt);
 		float moveAmountLeft =(float) (speedLeft * fixedDt);
@@ -137,6 +165,13 @@ public class Player implements KeyListener {
 		if(!up && !down && !right && !left){
 			animationState = 4;
 		}
+		
+		currentFPS++;
+        if(System.currentTimeMillis() - startFPS >= 1000) {
+            FPS = currentFPS;
+            currentFPS = 0;
+            startFPS = System.currentTimeMillis();
+        }
 	}
 
 	public void moveMapUp(float speed){
@@ -292,12 +327,7 @@ public class Player implements KeyListener {
 	public void render(Graphics2D g) {
 		g.fillRect((int)pos.xPos, (int)pos.yPos, width, height);
 		
-		g.setColor(Color.BLACK);
-		g.fillRect(0, 0, Main.width, Main.height / 6);
-		g.fillRect(0, 750, Main.width, Main.height / 6);
-		g.setColor(Color.WHITE);
-		
-		g.clipRect(0, 0, Main.width, Main.height);
+
 		
 		if(animationState == 0) {
 			g.drawImage(ani_up.sprite,(int)pos.xPos - width / 2, (int)pos.yPos - height, width * scale, height * scale, null);
@@ -327,7 +357,11 @@ public class Player implements KeyListener {
 			g.drawImage(ani_idle.sprite,(int)pos.xPos - width / 2, (int)pos.yPos - height, width * scale, height * scale, null);
 				ani_idle.update(System.currentTimeMillis());
 		}
+		
+		g.drawRect((int)pos.xPos - renderDistanceWidth *32 / 2 + width / 2, (int)pos.yPos - renderDistanceHeight * 32 / 2 + height / 2, renderDistanceWidth * 32, renderDistanceHeight * 32);
 
+		guiM.render(g);
+		hudM.render(g);
 	}
 
 	@Override
@@ -372,5 +406,133 @@ public class Player implements KeyListener {
 		// TODO Auto-generated method stub
 		
 	}
+
+	//GETTERS
+	
+	public Vector2F getPos() {
+		return pos;
+	}
+
+	public int getWidth() {
+		return width;
+	}
+
+	public int getHeight() {
+		return height;
+	}
+
+	public int getScale() {
+		return scale;
+	}
+
+	public static boolean isUp() {
+		return up;
+	}
+
+	public static boolean isDown() {
+		return down;
+	}
+
+	public static boolean isLeft() {
+		return left;
+	}
+
+	public static boolean isRight() {
+		return right;
+	}
+
+	public float getMaxSpeed() {
+		return maxSpeed;
+	}
+
+	public float getSpeedUp() {
+		return speedUp;
+	}
+
+	public float getSpeedDown() {
+		return speedDown;
+	}
+
+	public float getSpeedLeft() {
+		return speedLeft;
+	}
+
+	public float getSpeedRight() {
+		return speedRight;
+	}
+
+	public float getSlowDown() {
+		return slowDown;
+	}
+
+	public float getFixedDt() {
+		return fixedDt;
+	}
+
+	public int getRenderDistanceWidth() {
+		return renderDistanceWidth;
+	}
+
+	public int getRenderDistanceHeight() {
+		return renderDistanceHeight;
+	}
+
+	public static Rectangle getRender() {
+		return render;
+	}
+
+	public int getAnimationState() {
+		return animationState;
+	}
+
+	public ArrayList<BufferedImage> getListUp() {
+		return listUp;
+	}
+
+	public Animator getAni_up() {
+		return ani_up;
+	}
+
+	public ArrayList<BufferedImage> getListDown() {
+		return listDown;
+	}
+
+	public Animator getAni_down() {
+		return ani_down;
+	}
+
+	public ArrayList<BufferedImage> getListRight() {
+		return listRight;
+	}
+
+	public Animator getAni_right() {
+		return ani_right;
+	}
+
+	public ArrayList<BufferedImage> getListLeft() {
+		return listLeft;
+	}
+
+	public Animator getAni_left() {
+		return ani_left;
+	}
+
+	public ArrayList<BufferedImage> getListIdle() {
+		return listIdle;
+	}
+
+	public Animator getAni_idle() {
+		return ani_idle;
+	}
+
+	public HUDManager getHudM() {
+		return hudM;
+	}
+	
+	public int getFPS() {
+        return FPS;
+    }
+	
+	
 
 }
